@@ -1,0 +1,328 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block css %}
+{% endblock %}
+{% block contenido %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="icon" href="img/Fevicon.png" type="image/png">
+  <link rel="stylesheet" href="{% static 'core/vendors/bootstrap/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'core/vendors/fontawesome/css/all.min.css' %}">
+	<link rel="stylesheet" href="{% static 'core/vendors/themify-icons/themify-icons.css' %}">
+  <link rel="stylesheet" href="{% static 'core/vendors/nice-select/nice-select.css' %}">
+  <link rel="stylesheet" href="{% static 'core/vendors/owl-carousel/owl.theme.default.min.css' %}">
+  <link rel="stylesheet" href="{% static 'core/vendors/owl-carousel/owl.carousel.min.css' %}">
+  <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+  
+  <link rel = "stylesheet" href="{%static 'core/css/open ' %}">
+  <style>
+#transferButton {
+    color: white;
+    background-color: blue;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+</style>
+</head>
+<body>
+ 
+	<!--================ End Header Menu Area =================-->
+
+	<!-- ================ start banner area ================= -->	
+	<section class="blog-banner-area" id="category">
+		<div class="container h-100">
+			<div class="blog-banner">
+				<div class="text-center">
+					<h1>Checkout</h1>
+					<nav aria-label="breadcrumb" class="banner-breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Verificar</li>
+            </ol>
+          </nav>
+				</div>
+			</div>
+    </div>
+	</section>
+	<!-- ================ end banner area ================= -->
+  
+  
+  <!--================Checkout Area =================-->
+  <section class="checkout_area section-margin--small">
+    <div class="container">
+        <div class="returning_customer">
+        </div>
+
+        <div class="billing_details">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h3>Detalles de facturación</h3>
+                    <!--<form method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <input type="submit" class="btn btn-success" value="Aceptar">
+                    </form>--><form class="row contact_form" action="#" method="post" novalidate="novalidate">
+                        <div class="col-md-6 form-group p_star">
+                            <input type="text" class="form-control" id="first" name="name" placeholder="nombre">
+                            <span class="placeholder" data-placeholder="First name"></span>
+                        </div>
+                        <div class="col-md-6 form-group p_star">
+                            <input type="text" class="form-control" id="last" name="name" placeholder="apellido">
+                            <span class="placeholder" data-placeholder="Last name"></span>
+                        </div>
+
+                        <div class="col-md-12 form-group p_star">
+                            <input type="text" class="form-control" id="add1" name="add1" placeholder="Direccion 1">
+                            <span class="placeholder" data-placeholder="Address line 01"></span>
+                        </div>
+                        <div class="col-md-12 form-group p_star">
+                            <select class="country_select">
+                                <option value="0">Región</option>
+                                <option value="1">Región de Arica y Parinacota</option>
+                                <option value="2">Región de Tarapacá</option>
+                                <option value="3">Región de Antofagasta</option>
+                                <option value="4">Región de Atacama</option>
+                                <option value="5">Región de Coquimbo</option>
+                                <option value="6">Región de Valparaiso</option>
+                                <option value="7">Región de Metropolitana</option>
+                                <option value="8">Región de O'Higgins</option>
+                                <option value="9">Región de Maule</option>
+                                <option value="10">Región de Ñuble</option>
+                                <option value="11">Región de Biobio</option>
+                                <option value="12">Región de La Araucania</option>
+                                <option value="13">Región de Los Rios</option>
+                                <option value="14">Región de Los Lagos</option>
+                                <option value="15">Región de Aysen</option>
+                                <option value="16">Región de Magallanes</option>
+
+                            </select>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <input type="text" class="form-control" id="zip" name="zip" placeholder="Codigo Postal">
+                        </div>
+
+                        
+                    </form>
+                    
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="order_box">
+                        <h2>Tu Pedido</h2>
+                        <ul class="list">
+                            <li><a href="#"><h4>Producto <span>Total</span></h4></a></li>
+                            {% for item in items %}
+                                <li>
+                                    <a href="#">
+                                        <img src="{{ item.producto.imagen_url }}" alt="{{ item.producto.nombre }}" style="width:50px; height:auto;">
+                                        {{ item.producto.nombre }} <span class="middle">x {{ item.cantidad }}</span> <span class="last">${{ item.subtotal }}</span>
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        <ul class="list list_2">
+                            <li><a href="#">Subtotal <span>${{ total_productos }}</span></a></li>
+                            <li><a href="#">Total en CLP <span>${{ total_final }}</span></a></li>
+                            <li><a href="#">Total en USD <span>${{ total_final_usd }}</span></a></li>
+                        </ul>
+                        <div class="creat_account">
+                            <input type="checkbox" id="f-option4" name="selector">
+                            <label for="f-option4">He leído y acepto los </label>
+                            <a href="#">Términos y condiciones*</a>
+                        </div>
+                        <div class="payment_item">
+                            <div class="radion_btn">
+                                <input type="radio" id="f-option5" name="selector">
+                                <label for="f-option5">Transferencia</label>
+                                <div class="check"></div>
+                            </div>
+                        </div>
+                        <button style="color: aliceblue;" style="background-color: black;" id="transferButton">Realizar transferencia</button>
+                        <div>
+                            <div>
+                                <label for="f-option6">Paypal </label>
+                                <img src="img/product/card.jpg" alt="">
+                                <div class="check"></div>
+                            </div>
+                            <div class="text-center">
+                                <div id="paypal-button-container"></div>
+                            </div>
+                            <p>Paga vía PayPal; puedes pagar con tu tarjeta de crédito/débito si no tienes una cuenta de PayPal.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    
+  </section>
+  <!--================End Checkout Area =================-->
+
+
+
+  <!--================ Start footer Area  =================-->	
+	<footer>
+		<div class="footer-area">
+			<div class="container">
+				<div class="row section_gap">
+					<div class="col-lg-3 col-md-6 col-sm-6">
+						<div class="single-footer-widget tp_widgets">
+							<h4 class="footer_title large_title">Nuestro Compromiso</h4>
+							<p>
+								So seed seed green that winged cattle in. Gathering thing made fly you're no 
+								divided deep moved us lan Gathering thing us land years living.
+							</p>
+							<p>
+								So seed seed green that winged cattle in. Gathering thing made fly you're no divided deep moved 
+							</p>
+						</div>
+					</div>
+					<div class="offset-lg-1 col-lg-2 col-md-6 col-sm-6">
+						<div class="single-footer-widget tp_widgets">
+							<h4 class="footer_title">Quick Links</h4>
+							<ul class="list">
+								<li><a href="#">Home</a></li>
+								<li><a href="#">Shop</a></li>
+								<li><a href="#">Blog</a></li>
+								<li><a href="#">Product</a></li>
+								<li><a href="#">Brand</a></li>
+								<li><a href="#">Contact</a></li>
+							</ul>
+						</div>
+					</div>
+					
+					<div class="offset-lg-1 col-lg-3 col-md-6 col-sm-6">
+						<div class="single-footer-widget tp_widgets">
+							<h4 class="footer_title">Contactenos</h4>
+							<div class="ml-40">
+								<p class="sm-head">
+									<span class="fa fa-phone"></span>
+									Telefonos
+								</p>
+								<p>
+									22 2329286 <br>
+									+56 9 4856 7890
+								</p>
+	
+								<p class="sm-head">
+									<span class="fa fa-envelope"></span>
+									Email
+								</p>
+								<p>
+									petsfamily@gmail.com <br>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="footer-bottom">
+			<div class="container">
+				<div class="row d-flex">
+					<p class="col-lg-12 footer-text text-center">
+						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!--================ End footer Area  =================-->
+
+
+
+  <script src="vendors/jquery/jquery-3.2.1.min.js"></script>
+  <script src="vendors/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="vendors/skrollr.min.js"></script>
+  <script src="vendors/owl-carousel/owl.carousel.min.js"></script>
+  <script src="vendors/nice-select/jquery.nice-select.min.js"></script>
+  <script src="vendors/jquery.ajaxchimp.min.js"></script>
+  <script src="vendors/mail-script.js"></script>
+  <script src="js/main.js"></script>
+
+  <script>
+    document.getElementById('f-option5').addEventListener('change', function() {
+        var transferButton = document.getElementById('transferButton');
+        if (this.checked) {
+            transferButton.style.display = 'block';
+        } else {
+            transferButton.style.display = 'none';
+        }
+    });
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+  <script>
+    paypal.Button.render({
+        env: 'sandbox',
+        client: {
+            sandbox: 'AUbyYWi5sLEJdpufwUULYJeSKjxSDesn86WTeir5R-0t0LpJLVD6UbeYprN2qGHgd5aOQLfzx3yDY292',
+            production: 'demo_production_client_id'
+        },
+        locale: 'es_CL',
+        style: {
+            size: 'large',
+            color: 'black',
+            shape: 'rect'
+        },
+        commit: true,
+        payment: function (data, actions) {
+            return actions.payment.create({
+                transactions: [{
+                    amount: {
+                        total: '{{ total_final_usd }}',
+                        currency: 'USD'
+                    }
+                }]
+            });
+        },
+        onAuthorize: function (data, actions) {
+            return actions.payment.execute().then(function(){
+                window.location.href = "{% url 'compra_confirmada' %}";
+            });
+        },
+        onCancel: function (data) {
+            Swal.fire({
+                title: 'Pago Cancelado',
+                text: 'El pago ha sido cancelado!',
+                icon: 'error',
+                showCancelButton: false,
+                confirmButtonColor: '#333CFF',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Aceptar'
+            });
+        },
+        onError: function (err) {
+            Swal.fire({
+                title: 'Error de pago',
+                text: 'Ha ocurrido un error con el pago!',
+                icon: 'error',
+                showCancelButton: false,
+                confirmButtonColor: '#333CFF',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Aceptar'
+            });
+        }
+    }, '#paypal-button-container');
+  </script>
+{% endblock %}

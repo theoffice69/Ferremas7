@@ -1,0 +1,103 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block contenido %}
+{% load humanize %}
+
+<section class="cart_area">
+    <div class="container">
+        <div class="cart_inner">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Producto</th>
+                            <th scope="col">Precio</th>
+                            <th scope="col">Cantidad</th>
+                            <th scope="col">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for x in items %}
+                            <tr>
+                                <td>
+                                    <div class="media">
+                                        <div class="d-flex">
+                                            <img src="{{ x.producto.imagen_url }}" alt="" height="80px" width="60px">
+                                        </div>
+                                        <div class="media-body">
+                                            <p>{{ x.producto.nombre }}</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <h5>${{ x.producto.precio }}</h5>
+                                </td>
+                                <td>
+                                    <h5>
+                                        <a href="{% url 'cartdel' x.id %}" style="text-decoration: none;">
+                                            <i class="ti-minus"></i>
+                                        </a>
+                                        {{ x.cantidad }}
+                                        <a href="{% url 'cartadd' x.id %}" style="text-decoration: none;">
+                                            <i class="ti-plus"></i>
+                                        </a>
+                                    </h5>
+                                </td>
+                                <td>
+                                    <h5>${{ x.subtotal }}</h5>
+                                </td>
+                                <td>
+                                    <a href="{% url 'cartdelete' x.id %}" style="text-decoration: none;">
+                                        <i class="ti-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        
+                        <tr class="bottom_button">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td><h5>Total en CLP</h5></td>
+                            <td><h5>${{ total }}</h5></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td><h5>Total en USD</h5></td>
+                            <td><h5>${{ total_usd }}</h5></td>
+                        </tr>
+                        <tr class="shipping_area">
+                            <td class="d-none d-md-block"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr class="out_button_area">
+                            <td class="d-none-l"></td>
+                            <td class=""></td>
+                            <td></td>
+                            <td>
+                                <div class="checkout_btn_inner d-flex align-items-center">
+                                    <a class="gray_btn" href="{% url 'checkout' %}">Ir a pagar</a>
+                                    <div id="paypal-button-container"></div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}
