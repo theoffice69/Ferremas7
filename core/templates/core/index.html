@@ -19,6 +19,14 @@
           <p>Bienvenidos a</p>
           <!-- Título FERREMAS más grande y centrado -->
           <h3 style="font-size: 8em; margin: 0 auto; color: rgb(255, 255, 255);">FERREMAS</h3>
+          <form action="{% url 'buscar' %}" method="get">
+            <input type="search" id="site-search" name="q"
+                   aria-label="Buscar en el sitio:"
+                   placeholder="Buscar en el sitio"
+                   pattern=".*\S.*"
+                   required>
+            <button id="search-button">Buscar</button>
+        </form>
           <h4></h4>
           <!-- Formulario de búsqueda mejorado con bordes redondeados -->
         </div>
@@ -106,4 +114,37 @@
   </div>
 </body>
 <br>
+
+
+<script>
+  document.getElementById('search-button').addEventListener('click', function() {
+    var searchQuery = document.getElementById('site-search').value;
+
+    // Reemplaza 'apiUrl' con la URL de tu API
+    var apiUrl = 'http://127.0.0.1:5000/productos?nombre=' + encodeURIComponent(searchQuery);
+
+    fetch(apiUrl)
+      .then(response => response.json())
+      .then(data => {
+        // Verifica si el producto fue encontrado
+        if (data && data.length > 0) {
+          // Busca una coincidencia exacta con la consulta de búsqueda
+          var product = data.find(p => p.nombre.toLowerCase() === searchQuery.toLowerCase());
+
+          if (product) {
+            // Redirige a la página del producto encontrado
+            var productUrl = 'http://127.0.0.1:8000/singleproduct/' + encodeURIComponent(product.nombre);
+            window.location.href = productUrl;
+          } else {
+            // Muestra un mensaje si no se encontró una coincidencia exacta
+            alert('Producto no encontrado');
+          }
+        } else {
+          // Muestra un mensaje si el producto no fue encontrado
+          alert('Producto no encontrado');
+        }
+      });
+  });
+</script>
+
 {% endblock %}

@@ -23,7 +23,8 @@ from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.models import User
 from django.http import HttpResponse
-
+from django.http import JsonResponse
+from django.views.decorators.cache import never_cache
 
 #LOGICAS API
 
@@ -397,13 +398,10 @@ def cartdel(request, id):
         return HttpResponse("Error al obtener la información del producto de la API", status=response.status_code)
 
 
-def singleproduct(request, id):
-    response = requests.get(f'http://127.0.0.1:5000/productos/{id}')  
-    producto = response.json()  # Asumiendo que la respuesta es un objeto único de producto
-    data = {
-        'producto': producto
-    }
-    return render(request, 'core/single-product.html', data)
+
+
+
+
 
 def grupo_requerido(nombre_grupo):
 	def decorator(view_func):
@@ -507,8 +505,32 @@ def blog(request):
 	return render(request, 'core/blog.html')
 
 
+def buscar(request):
+    id_producto = request.GET.get('q', '')
+    response = requests.get(f'http://127.0.0.1:5000/productos/{id_producto}')
+
+    if response.status_code == 200:  # Si la respuesta es exitosa
+        producto = response.json()
+        return redirect('single-product', codigo=producto['id'])
+    else:
+        return render(request, 'core/index.html', {'error': 'Producto no encontrado'})
+
+@never_cache
+def singleproduct(request, codigo):  # Cambia 'product_name' a 'codigo'
+    response = requests.get(f'http://127.0.0.1:5000/productos/{codigo}')  # Usa 'codigo' en lugar de 'product_name'
+    producto = response.json()  # Asumiendo que la respuesta es un solo producto
+
+    # Verifica si se encontró el producto
+    if producto:
+        return render(request, 'core/single-product.html', {'producto': producto})  # Pasa los datos del producto a la plantilla
+    else:
+        # Manejar el caso en que no se encuentre el producto
+        return HttpResponse("Producto no encontrado", status=404)
+
+
+
 def confirmar_pagos(request):
-	return render(request, 'core/confirmar_pagos')
+    return render(request, 'core/confirmar_pagos.html')  # Asegúrate de que el nombre de la plantilla es correcto
 
 
 #def cart(request):

@@ -38,7 +38,7 @@ urlpatterns = [
     path('perfil/', perfil,name = "perfil"),
     path('registro/', registro,name = "registro"),
     path('singleblog/', singleblog, name="singleblog"),
-    path('singleproduct/<id>', singleproduct, name="singleproduct"),
+    path('singleproduct/<str:product_name>/', singleproduct, name="singleproduct"),
     path('subsForm/', subsForm,name = "subsForm"),
     path('trackingorder/', trackingorder,name = "tracking-order"),
     path('asignar-roles/', asignar_roles, name='asignar_roles'),
@@ -73,5 +73,13 @@ urlpatterns = [
     path('rechazar-pedido/<int:pedido_id>/', rechazar_pedido, name='rechazar_pedido'),
     path('ordenar_pedidos/', ordenar_pedidos, name='ordenar_pedidos'),
     path('ordenes_pedidos/', ordenes_pedidos, name='ordenes_pedidos'),
+
+
+
+
+
+
+    path('producto/<str:codigo>/', singleproduct, name='single-product'),
+    path('buscar/', buscar, name='buscar'),
 ]
 
